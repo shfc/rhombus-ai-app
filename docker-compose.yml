@@ -1,0 +1,18 @@
+services:
+  rhombus-backend:
+    container_name: rhombus-backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - db_data:/app/db_data
+    command: sh -c "mkdir -p /app/db_data && uv run python manage.py migrate && uv run python manage.py runserver 0.0.0.0:8000"
+
+  rhombus-frontend:
+    container_name: rhombus-frontend
+    build: ./frontend
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:
