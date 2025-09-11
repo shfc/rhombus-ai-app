@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import rhombusAILogo from './assets/RhombusAI.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import rhombusAILogo from './assets/RhombusAI.svg';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
       <div>
         <a href="https://rhombusai.com" target="_blank">
-          <img src={rhombusAILogo} className="logo react" alt="Rhombus AI logo" />
+          <img
+            src={rhombusAILogo}
+            className="logo react"
+            alt="Rhombus AI logo"
+          />
         </a>
       </div>
       <h1>Rhombus AI APP</h1>
@@ -22,7 +26,7 @@ function App() {
         </p>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
