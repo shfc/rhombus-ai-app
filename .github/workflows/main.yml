@@ -1,0 +1,25 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  # Run linting
+  lint:
+    name: Code Quality Checks
+    uses: ./.github/workflows/lint.yml
+    with:
+      node-version: '20'
+      python-version: '3.13'
+
+  # Run CI after linting passes
+  ci:
+    name: Build and Test
+    needs: lint
+    uses: ./.github/workflows/ci.yml
+    with:
+      node-version: '20'
+      python-version: '3.13'
