@@ -1,5 +1,5 @@
 """
-ASGI config for app project.
+ASGI config for rhombus_ai project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rhombus_ai.settings")
 
 application = get_asgi_application()
