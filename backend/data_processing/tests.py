@@ -42,6 +42,11 @@ class FileUploadAPITest(TestCase):
         self.assertIsNotNone(uploaded_file)
         self.assertEqual(uploaded_file.name, "test.csv")
         self.assertEqual(uploaded_file.file_type, "csv")
+        
+        # Check if headers were parsed
+        self.assertIsNotNone(uploaded_file.headers)
+        self.assertEqual(uploaded_file.headers, ["name", "age", "city"])
+        self.assertEqual(uploaded_file.row_count, 2)
 
     def test_upload_missing_file_type(self):
         """Test uploading without file_type"""
@@ -117,3 +122,68 @@ class FileUploadAPITest(TestCase):
 
         self.assertEqual(response.status_code, 204)
         self.assertEqual(UploadedFile.objects.count(), 0)
+
+
+class FilePreviewAPITest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        # Create a test file with more data for preview testing
+        csv_content = "name,age,city,email\nJohn,25,NYC,john@test.com\nJane,30,LA,jane@test.com\nBob,35,Chicago,bob@test.com\nAlice,28,Houston,alice@test.com\nCharlie,32,Phoenix,charlie@test.com"
+        csv_file = SimpleUploadedFile(
+            "preview_test.csv", csv_content.encode("utf-8"), content_type="text/csv"
+        )
+        self.uploaded_file = UploadedFile.objects.create(
+            name="preview_test.csv", file=csv_file, file_type="csv", file_size=1024
+        )
+
+    def test_file_preview_default_rows(self):
+        """Test file preview with default number of rows"""
+        preview_url = reverse("data_processing:file-preview", args=[self.uploaded_file.pk])
+        response = self.client.get(preview_url)
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        
+        # Check response structure
+        self.assertIn("file_info", data)
+        self.assertIn("preview_rows", data)
+        self.assertIn("data", data)
+        
+        # Check file info
+        self.assertEqual(data["file_info"]["name"], "preview_test.csv")
+        
+        # Check preview data
+        self.assertEqual(data["preview_rows"], 5)  # All 5 rows should be returned
+        self.assertEqual(len(data["data"]), 5)
+        
+        # Check first row structure
+        first_row = data["data"][0]
+        self.assertIn("name", first_row)
+        self.assertIn("age", first_row)
+        self.assertIn("city", first_row)
+        self.assertIn("email", first_row)
+
+    def test_file_preview_custom_rows(self):
+        """Test file preview with custom number of rows"""
+        preview_url = reverse("data_processing:file-preview", args=[self.uploaded_file.pk])
+        response = self.client.get(f"{preview_url}?rows=3")
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        
+        self.assertEqual(data["preview_rows"], 3)
+        self.assertEqual(len(data["data"]), 3)
+
+    def test_file_preview_invalid_rows(self):
+        """Test file preview with invalid rows parameter"""
+        preview_url = reverse("data_processing:file-preview", args=[self.uploaded_file.pk])
+        response = self.client.get(f"{preview_url}?rows=invalid")
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_file_preview_not_found(self):
+        """Test file preview for non-existent file"""
+        preview_url = reverse("data_processing:file-preview", args=[999])
+        response = self.client.get(preview_url)
+
+        self.assertEqual(response.status_code, 404)

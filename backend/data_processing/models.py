@@ -24,6 +24,14 @@ class UploadedFile(models.Model):
     file_type = models.CharField(max_length=10, choices=FILE_TYPE_CHOICES)
     file_size = models.PositiveIntegerField(help_text="File size in bytes")
 
+    # File content information
+    headers = models.JSONField(
+        null=True, blank=True, help_text="Column headers from the file"
+    )
+    row_count = models.PositiveIntegerField(
+        null=True, blank=True, help_text="Total number of data rows (excluding header)"
+    )
+
     # Metadata
     uploaded_by = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True
