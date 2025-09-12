@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import FileDetailView, FileListView, FileUploadView, FilePreviewView
+from .views import FileDetailView, FileListView, FilePreviewView, FileUploadView
 
 app_name = "data_processing"
 

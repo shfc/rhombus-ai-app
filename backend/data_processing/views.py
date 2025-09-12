@@ -12,7 +12,7 @@ from .models import UploadedFile
 def parse_file_headers(file_obj, file_type):
     """Parse file headers and count rows"""
     file_path = file_obj.file.path
-    
+
     try:
         if file_type == "csv":
             # Read CSV to get headers and row count
@@ -26,7 +26,7 @@ def parse_file_headers(file_obj, file_type):
             row_count = len(df)
         else:
             return None, None
-            
+
         return headers, row_count
     except Exception:
         # If parsing fails, return None
@@ -36,7 +36,7 @@ def parse_file_headers(file_obj, file_type):
 def get_file_preview(file_obj, file_type, rows=10):
     """Get preview of file data (first N rows)"""
     file_path = file_obj.file.path
-    
+
     try:
         if file_type == "csv":
             df = pd.read_csv(file_path, nrows=rows)
@@ -44,9 +44,9 @@ def get_file_preview(file_obj, file_type, rows=10):
             df = pd.read_excel(file_path, nrows=rows)
         else:
             return None
-            
+
         # Convert DataFrame to list of dictionaries
-        return df.to_dict('records')
+        return df.to_dict("records")
     except Exception:
         return None
 
@@ -145,23 +145,25 @@ class FilePreviewView(View):
     def get(self, request, pk):
         try:
             file_obj = UploadedFile.objects.get(pk=pk)
-            
+
             # Get number of rows to preview (default: 10, max: 100)
             rows = int(request.GET.get("rows", 10))
             rows = min(max(1, rows), 100)  # Ensure rows is between 1 and 100
-            
+
             # Get preview data
             preview_data = get_file_preview(file_obj, file_obj.file_type, rows)
-            
+
             if preview_data is None:
                 return JsonResponse({"error": "Could not preview file"}, status=400)
-            
-            return JsonResponse({
-                "file_info": file_to_dict(file_obj, request),
-                "preview_rows": len(preview_data),
-                "data": preview_data
-            })
-            
+
+            return JsonResponse(
+                {
+                    "file_info": file_to_dict(file_obj, request),
+                    "preview_rows": len(preview_data),
+                    "data": preview_data,
+                }
+            )
+
         except UploadedFile.DoesNotExist:
             return JsonResponse({"error": "File not found"}, status=404)
         except ValueError:

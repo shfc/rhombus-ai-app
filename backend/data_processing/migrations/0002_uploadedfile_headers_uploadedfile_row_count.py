@@ -4,20 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('data_processing', '0001_initial'),
+        ("data_processing", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='uploadedfile',
-            name='headers',
-            field=models.JSONField(blank=True, help_text='Column headers from the file', null=True),
+            model_name="uploadedfile",
+            name="headers",
+            field=models.JSONField(
+                blank=True, help_text="Column headers from the file", null=True
+            ),
         ),
         migrations.AddField(
-            model_name='uploadedfile',
-            name='row_count',
-            field=models.PositiveIntegerField(blank=True, help_text='Total number of data rows (excluding header)', null=True),
+            model_name="uploadedfile",
+            name="row_count",
+            field=models.PositiveIntegerField(
+                blank=True,
+                help_text="Total number of data rows (excluding header)",
+                null=True,
+            ),
         ),
     ]

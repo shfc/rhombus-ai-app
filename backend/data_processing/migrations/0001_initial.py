@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,18 +15,51 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='UploadedFile',
+            name="UploadedFile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Original filename', max_length=255)),
-                ('file', models.FileField(max_length=500, upload_to=data_processing.models.upload_to_folder)),
-                ('file_type', models.CharField(choices=[('csv', 'CSV'), ('excel', 'Excel')], max_length=10)),
-                ('file_size', models.PositiveIntegerField(help_text='File size in bytes')),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('uploaded_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(help_text="Original filename", max_length=255),
+                ),
+                (
+                    "file",
+                    models.FileField(
+                        max_length=500,
+                        upload_to=data_processing.models.upload_to_folder,
+                    ),
+                ),
+                (
+                    "file_type",
+                    models.CharField(
+                        choices=[("csv", "CSV"), ("excel", "Excel")], max_length=10
+                    ),
+                ),
+                (
+                    "file_size",
+                    models.PositiveIntegerField(help_text="File size in bytes"),
+                ),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "uploaded_by",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-uploaded_at'],
+                "ordering": ["-uploaded_at"],
             },
         ),
     ]
