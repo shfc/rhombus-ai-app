@@ -575,3 +575,8 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/vs,macos,react,python
+
+# Custom
+backend/**/*.csv
+backend/**/*.xlsx
+backend/**/*.xls
