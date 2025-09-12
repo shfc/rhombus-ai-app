@@ -2,10 +2,13 @@ services:
   rhombus-backend:
     container_name: rhombus-backend
     build: ./backend
+    environment:
+      - PYTHONUNBUFFERED=1
     ports:
       - "8000:8000"
     volumes:
       - db_data:/app/db_data
+      - media_files:/app/media
     command: sh -c "uv run python manage.py migrate && uv run python manage.py runserver 0.0.0.0:8000"
 
   rhombus-frontend:
@@ -13,6 +16,9 @@ services:
     build: ./frontend
     ports:
       - "80:80"
+    depends_on:
+      - rhombus-backend
 
 volumes:
   db_data:
+  media_files:
