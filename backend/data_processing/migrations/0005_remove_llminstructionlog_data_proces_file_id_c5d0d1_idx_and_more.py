@@ -5,83 +5,94 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('data_processing', '0004_auto_20250913_0355'),
+        ("data_processing", "0004_auto_20250913_0355"),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='llminstructionlog',
-            name='data_proces_file_id_c5d0d1_idx',
+            model_name="llminstructionlog",
+            name="data_proces_file_id_c5d0d1_idx",
         ),
         migrations.RemoveIndex(
-            model_name='llminstructionlog',
-            name='data_proces_success_20e8ef_idx',
+            model_name="llminstructionlog",
+            name="data_proces_success_20e8ef_idx",
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='confidence',
+            model_name="llminstructionlog",
+            name="confidence",
             field=models.FloatField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='description',
+            model_name="llminstructionlog",
+            name="description",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='file',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='instruction_logs', to='data_processing.uploadedfile'),
+            model_name="llminstructionlog",
+            name="file",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="instruction_logs",
+                to="data_processing.uploadedfile",
+            ),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='llm_response',
+            model_name="llminstructionlog",
+            name="llm_response",
             field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='parse_error',
+            model_name="llminstructionlog",
+            name="parse_error",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='processing_time_ms',
-            field=models.PositiveIntegerField(blank=True, help_text='Processing time in milliseconds', null=True),
+            model_name="llminstructionlog",
+            name="processing_time_ms",
+            field=models.PositiveIntegerField(
+                blank=True, help_text="Processing time in milliseconds", null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='regex_pattern',
+            model_name="llminstructionlog",
+            name="regex_pattern",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='replacement',
+            model_name="llminstructionlog",
+            name="replacement",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='success',
-            field=models.BooleanField(default=False, help_text='Whether processing was successful'),
+            model_name="llminstructionlog",
+            name="success",
+            field=models.BooleanField(
+                default=False, help_text="Whether processing was successful"
+            ),
         ),
         migrations.AlterField(
-            model_name='llminstructionlog',
-            name='user_instruction',
+            model_name="llminstructionlog",
+            name="user_instruction",
             field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name='uploadedfile',
-            name='headers',
+            model_name="uploadedfile",
+            name="headers",
             field=models.JSONField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='uploadedfile',
-            name='name',
+            model_name="uploadedfile",
+            name="name",
             field=models.CharField(max_length=255),
         ),
         migrations.AlterField(
-            model_name='uploadedfile',
-            name='row_count',
-            field=models.PositiveIntegerField(blank=True, help_text='Number of data rows (excluding header)', null=True),
+            model_name="uploadedfile",
+            name="row_count",
+            field=models.PositiveIntegerField(
+                blank=True,
+                help_text="Number of data rows (excluding header)",
+                null=True,
+            ),
         ),
     ]

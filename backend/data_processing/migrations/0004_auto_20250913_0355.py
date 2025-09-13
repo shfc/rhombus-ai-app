@@ -4,10 +4,8 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('data_processing', '0003_llminstructionlog'),
+        ("data_processing", "0003_llminstructionlog"),
     ]
 
-    operations = [
-    ]
+    operations = []
