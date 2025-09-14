@@ -42,11 +42,11 @@ describe('fileUtils', () => {
 
   describe('isValidFileSize', () => {
     it('should validate file size correctly with default max size', () => {
-      const tenMB = 10 * 1024 * 1024;
+      const oneGB = 1024 * 1024 * 1024;
       expect(isValidFileSize(0)).toBe(true);
-      expect(isValidFileSize(tenMB)).toBe(true);
-      expect(isValidFileSize(tenMB - 1)).toBe(true);
-      expect(isValidFileSize(tenMB + 1)).toBe(false);
+      expect(isValidFileSize(oneGB)).toBe(true);
+      expect(isValidFileSize(oneGB - 1)).toBe(true);
+      expect(isValidFileSize(oneGB + 1)).toBe(false);
     });
 
     it('should validate file size correctly with custom max size', () => {
@@ -91,11 +91,11 @@ describe('fileUtils', () => {
 
     it('should reject oversized file', () => {
       const file = createMockFile('test.csv');
-      Object.defineProperty(file, 'size', { value: 11 * 1024 * 1024 });
+      Object.defineProperty(file, 'size', { value: 1025 * 1024 * 1024 }); // 1025MB > 1GB
 
       const result = validateFile(file);
       expect(result.isValid).toBe(false);
-      expect(result.error).toBe('File size must be less than 10MB');
+      expect(result.error).toBe('File size must be less than 1024MB');
     });
 
     it('should use custom max size', () => {

@@ -28,12 +28,12 @@ export function isValidFileType(fileName: string): boolean {
 /**
  * Validates file size
  * @param fileSize - Size in bytes
- * @param maxSizeMB - Maximum size in MB (default: 10)
+ * @param maxSizeMB - Maximum size in MB (default: 1024)
  * @returns Boolean indicating if file size is valid
  */
 export function isValidFileSize(
   fileSize: number,
-  maxSizeMB: number = 10
+  maxSizeMB: number = 1024
 ): boolean {
   return fileSize <= maxSizeMB * 1024 * 1024;
 }
@@ -55,7 +55,7 @@ export function getFileType(fileName: string): 'csv' | 'excel' {
  */
 export function validateFile(
   file: File,
-  maxSizeMB: number = 10
+  maxSizeMB: number = 1024
 ): { isValid: boolean; error?: string } {
   if (!isValidFileType(file.name)) {
     return { isValid: false, error: 'Please upload a CSV or Excel file' };
