@@ -38,11 +38,9 @@ jobs:
     - name: Create .env file from .env.example
       shell: bash
       working-directory: ./backend
-      env:
-        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
         cp .env.example .env
-        echo "GOOGLE_API_KEY=$GOOGLE_API_KEY" >> .env
+        echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
 
     - name: Run migrations
       working-directory: ./backend
