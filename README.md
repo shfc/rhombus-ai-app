@@ -2,6 +2,11 @@
 
 A full-stack web application built with Django (backend) and React (frontend) for regex pattern matching and replacement using natural language processing.
 
+## Demo
+
+Check out the video demo: [Video Demo](https://drive.google.com/file/d/1NZTN3FjUaSKXy3Fz8Wa5CTvvKM0Ktmp5/view?usp=sharing)
+
+
 ## Prerequisites
 
 ### For Docker Setup
