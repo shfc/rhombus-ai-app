@@ -39,9 +39,7 @@ jobs:
       working-directory: ./backend
       run: |
         cp .env.example .env
-        sed -i "s/GOOGLE_API_KEY=your_gemini_api_key_here/GOOGLE_API_KEY=$GOOGLE_API_KEY/" .env
-      env:
-        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
 
     - name: Run migrations
       working-directory: ./backend
