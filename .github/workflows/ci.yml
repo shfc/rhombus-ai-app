@@ -85,6 +85,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
+    - name: Create frontend .env file
+      shell: bash
+      working-directory: ./frontend
+      run: cp .env.example .env
+
     - name: Install dependencies
       working-directory: ./frontend
       run: pnpm install --frozen-lockfile
