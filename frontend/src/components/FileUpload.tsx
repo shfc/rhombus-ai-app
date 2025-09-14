@@ -59,7 +59,7 @@ export function FileUpload({ onFileUploaded, className }: FileUploadProps) {
       const file = acceptedFiles[0];
       if (!file) return;
 
-      const validation = validateFile(file, 10);
+      const validation = validateFile(file, 1024);
       if (!validation.isValid) {
         setError(validation.error!);
         return;
