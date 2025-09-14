@@ -13,10 +13,6 @@ on:
         required: false
         default: "3.13"
         type: string
-  push:
-    branches: [main, dev]
-  pull_request:
-    branches: [main, dev]
 
 jobs:
   backend-lint:
