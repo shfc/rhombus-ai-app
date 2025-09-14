@@ -1,12 +1,6 @@
 # Rhombus AI App
 
-A full-stack web application built with Django (backend) and React (frontend).
-
-## Overview
-
-This project consists of:
-- **Backend**: Django application using Python 3.13 and uv for dependency management
-- **Frontend**: React application using Vite, TypeScript, and pnpm
+A full-stack web application built with Django (backend) and React (frontend) for regex pattern matching and replacement using natural language processing.
 
 ## Prerequisites
 
@@ -24,20 +18,28 @@ This project consists of:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:shfc/rhombus-ai-app.git
    cd rhombus-ai-app
    ```
 
-2. Start the application:
+2. Set up environment variables:
+   Copy the `.env.example` files to `.env` for both backend and frontend, and **set your `GOOGLE_API_KEY`** (required for LLM functionality):
+   ```bash
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   # Edit backend/.env and replace 'your_gemini_api_key_here' with your actual Gemini API key from https://aistudio.google.com/app/apikey
+   # Edit frontend/.env if you need to change the API URL
+   ```
+
+3. Start the application:
    ```bash
    docker-compose up --build
    ```
 
-3. Access the application:
+4. Access the application:
    - Frontend: http://localhost
-   - Backend API: http://localhost:8000
 
-4. Create a Django superuser (optional):
+5. Create a Django superuser (optional):
    ```bash
    docker-compose exec rhombus-backend uv run python manage.py createsuperuser
    ```
@@ -57,12 +59,19 @@ This project consists of:
    uv sync
    ```
 
-3. Run database migrations (if needed):
+3. Set up environment variables:
+   Copy the `.env.example` file to `.env` and **set your `GOOGLE_API_KEY`** (required for LLM functionality):
+   ```bash
+   cp .env.example .env
+   # Edit .env and replace 'your_gemini_api_key_here' with your actual Gemini API key from https://aistudio.google.com/app/apikey
+   ```
+
+4. Run database migrations (if needed):
    ```bash
    uv run python manage.py migrate
    ```
 
-4. Start the development server:
+5. Start the development server:
    ```bash
    uv run python manage.py runserver
    ```
@@ -81,7 +90,14 @@ The backend will be available at http://localhost:8000
    pnpm install
    ```
 
-3. Start the development server:
+3. Set up environment variables (optional):
+   Copy the `.env.example` file to `.env` and modify if needed:
+   ```bash
+   cp .env.example .env
+   # Edit .env if you need to change the API URL or add other variables
+   ```
+
+4. Start the development server:
    ```bash
    pnpm run dev
    ```
@@ -105,16 +121,29 @@ The frontend will be available at http://localhost:5173 (default Vite port)
 
 ```
 rhombus-ai-app/
-├── backend/          # Django backend
-│   ├── app/         # Django app
-│   ├── Dockerfile   # Backend Docker configuration
-│   ├── pyproject.toml
-│   └── uv.lock
-├── frontend/         # React frontend
-│   ├── src/
-│   ├── Dockerfile   # Frontend Docker configuration
-│   ├── package.json
-│   └── vite.config.ts
-├── docker-compose.yml # Docker Compose configuration
+├── backend/                    # Django backend
+│   ├── Dockerfile             # Backend Docker configuration
+│   ├── manage.py              # Django management script
+│   ├── pyproject.toml         # Python dependencies
+│   ├── uv.lock                # Dependency lock file
+│   ├── rhombus_ai/            # Django project settings
+│   ├── data_processing/       # Main Django app
+│   │   ├── models.py         # Database models
+│   │   ├── views.py          # API endpoints
+│   │   ├── llm_service.py    # Gemini AI integration
+│   │   └── migrations/       # Database migrations
+│   ├── db_data/              # SQLite database
+│   ├── media/                # User uploaded files
+│   └── static/               # Static files
+├── frontend/                  # React frontend
+│   ├── Dockerfile            # Frontend Docker configuration
+│   ├── package.json          # Node.js dependencies
+│   ├── vite.config.ts        # Vite configuration
+│   ├── public/               # Static assets
+│   └── src/                  # React application
+│       ├── components/       # React components
+│       ├── utils/           # Utility functions
+│       └── config/          # Configuration files
+├── docker-compose.yml        # Docker Compose configuration
 └── README.md
 ```
