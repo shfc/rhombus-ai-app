@@ -101,20 +101,19 @@ class LLMViewIntegrationTests(TestCase):
         )
         self.uploaded_file_id = response.json()["id"]
 
-    # FIXME: Read GOOGLE_API_KEY fail in GitHub Actions
-    # def test_column_modification_view_fallback(self):
-    #     modify_url = reverse(
-    #         "data_processing:column-modify", args=[self.uploaded_file_id]
-    #     )
-    #     response = self.client.post(
-    #         modify_url,
-    #         data={"instruction": "convert all email addresses to lowercase"},
-    #         content_type="application/json",
-    #     )
-    #     self.assertEqual(response.status_code, 200)
-    #     data = response.json()
-    #     self.assertIn("modification", data)
-    #     self.assertIn("preview", data)
-    #     modification = data["modification"]
-    #     self.assertEqual(modification["column_name"], "email")
-    #     self.assertIn("lowercase", modification["description"])
+    def test_column_modification_view(self):
+        modify_url = reverse(
+            "data_processing:column-modify", args=[self.uploaded_file_id]
+        )
+        response = self.client.post(
+            modify_url,
+            data={"instruction": "convert all email addresses to lowercase"},
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("modification", data)
+        self.assertIn("preview", data)
+        modification = data["modification"]
+        self.assertEqual(modification["column_name"], "email")
+        self.assertIn("lowercase", modification["description"])
