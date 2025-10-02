@@ -4,7 +4,9 @@ A full-stack web application built with Django (backend) and React (frontend) fo
 
 ## Demo
 
-Check out the video demo: [Video Demo](https://drive.google.com/file/d/1NZTN3FjUaSKXy3Fz8Wa5CTvvKM0Ktmp5/view?usp=sharing)
+Check out the video demo:
+
+https://github.com/user-attachments/assets/816a6ae9-0f48-41ab-b089-79b0d7b425d0
 
 
 ## Prerequisites
